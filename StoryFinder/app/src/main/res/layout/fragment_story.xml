@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="@color/colorPrimary"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/storyImageView"
+        android:layout_width="match_parent"
+        android:src="@drawable/triforce"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.16"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/story_title_label"
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/titleTextView"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.23"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="@string/story_details_label"
+        style="?android:listSeparatorTextViewStyle"
+        android:background="@color/colorPrimary"
+        android:layout_weight="0.40"
+        android:layout_gravity="fill_vertical"
+        android:id="@+id/descTextView"/>
+
+
+
+
+
+</LinearLayout>

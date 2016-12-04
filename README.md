@@ -1,8 +1,8 @@
 #Project-2 Story Finder Finale
 #### Team Number
-TODO - Add your team number here.(Look into Piazza for details)
+Team 19
 #### Team Members
-TODO - Add your team member names here.
+Ralph Acosta, Kimberly McIver, Rita Zaidan
 #### Youtube video Link
 TODO - Add your team's unlisted youtube video link here.
 
