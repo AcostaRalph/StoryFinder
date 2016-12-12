@@ -22,7 +22,43 @@
         style="?android:listSeparatorTextViewStyle"
         android:id="@+id/titleTextView"
         android:background="@color/colorAccent"
-        android:layout_weight="0.23"/>
+        android:layout_weight="0.1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Language"
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/language_label"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Genre"
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/genre_label"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Runtime"
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/runtime_label"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating"
+        style="?android:listSeparatorTextViewStyle"
+        android:id="@+id/rating_label"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"/>
 
 
     <TextView
