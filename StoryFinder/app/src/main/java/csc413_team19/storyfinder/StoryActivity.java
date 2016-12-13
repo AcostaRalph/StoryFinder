@@ -11,14 +11,17 @@ public class StoryActivity extends SingleFragmentActivity {
 
     private static final String EXTRA_STORY_ID = "csc413_team19.storyfinder.story_id";
 
+    public static String sSearchToken;
+
     @Override
     protected Fragment createFragment() {
-        UUID storyId = (UUID) getIntent().getSerializableExtra(EXTRA_STORY_ID);
+        String storyId = (String) getIntent().getSerializableExtra(EXTRA_STORY_ID);
         return StoryFragment.newInstance(storyId);
     }
 
-    public static Intent newIntent(Context packageContext, UUID id) {
+    public static Intent newIntent(Context packageContext, String id) {
         Intent intent = new Intent(packageContext, StoryActivity.class);
+        sSearchToken = id;
         intent.putExtra(EXTRA_STORY_ID, id);
         return intent;
     }

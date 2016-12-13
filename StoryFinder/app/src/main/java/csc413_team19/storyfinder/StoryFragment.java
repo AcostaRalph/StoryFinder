@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -22,9 +23,11 @@ public class StoryFragment extends Fragment {
     private TextView mTitle;
     private TextView mDescription;
     private ImageView mPicture;
+    static String sSearchToken;
+    JsonController mController;
 
 
-    public static StoryFragment newInstance(UUID storyId) {
+    public static StoryFragment newInstance(String storyId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_STORY_ID, storyId);
 
@@ -36,8 +39,20 @@ public class StoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID storyId = (UUID) getArguments().getSerializable(ARG_STORY_ID);
+        String storyId = (String) getArguments().getSerializable(ARG_STORY_ID);
         mStory = StoryMaker.get(getActivity()).getStory(storyId);
+        sSearchToken = storyId;
+//        mController = new JsonController(new JsonController.OnResponseListener() {
+//            @Override
+//            public void onSuccess(ArrayList<Story> stories) {
+//                mStory = stories.get(0);
+//            }
+//            @Override
+//            public void onFailure(String errorMessage) {
+//
+//            }
+//        });
+//        mController.sendSingleRequest(sSearchToken);
     }
 
 
@@ -50,9 +65,16 @@ public class StoryFragment extends Fragment {
         mDescription = (TextView) v.findViewById(R.id.descTextView);
         mPicture = (ImageView) v.findViewById(R.id.storyImageView);
 
+
+
+//        StoryMaker storyMaker = StoryMaker.get(getContext());
+//        ArrayList<Story> stories = storyMaker.getStories();
+
         mTitle.setText(mStory.getName());
-        mDescription.setText(mStory.getDescription());
-        mPicture.setImageDrawable(mStory.getImage());
+        mDescription.setText(mStory.getID());
+//        mTitle.setText(stories.get(0).getName());
+//        mDescription.setText(stories.get(0).getID());
+//        mPicture.setImageDrawable(mStory.getImage());
 
         return v;
     }

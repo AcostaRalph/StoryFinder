@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.UUID;
 
 /**
@@ -13,12 +16,33 @@ import java.util.UUID;
 public class Story {
 
     private UUID mUUID;
+    private String mID;
     private String mName;
     private String mDescription;
     private Drawable mImage;
 
+    public Story(JSONObject jsonObject) throws JSONException{
+        JSONObject jsonShowObject = jsonObject.getJSONObject("show");
+        JSONObject jsonExternalsObject = jsonShowObject.getJSONObject("externals");
+        if(jsonShowObject.has("name"))
+//            this.setName(jsonObject.getString("name"));
+        this.setName(jsonShowObject.getString("name"));
+//        if(jsonShowObject.has("summary"))
+//            this.setDescription(jsonShowObject.getString("summary"));
+        this.setID(jsonExternalsObject.getString("imdb"));
+    }
+
+
     public Story() {
         mUUID = UUID.randomUUID();
+    }
+
+    public String getID() {
+        return mID;
+    }
+
+    public void setID(String ID) {
+        mID = ID;
     }
 
     public UUID getUUID() {
