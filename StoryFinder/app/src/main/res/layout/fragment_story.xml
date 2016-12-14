@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:background="@color/colorPrimary"
@@ -7,71 +7,90 @@
               android:layout_height="match_parent"
               android:weightSum="1">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/storyImageView"
         android:layout_width="match_parent"
-        android:src="@drawable/triforce"
+        android:src="@drawable/card"
         android:background="@color/colorPrimary"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.16"/>
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/titleTextView"
+        android:layout_height="wrap_content"/>
+
+
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="fill_parent"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/descTextView"
+            android:text="@string/story_details_label"
+            style="?android:listSeparatorTextViewStyle"
+            android:background="@color/colorPrimary"
+            android:layout_height="wrap_content"
+
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"/>
+    </ScrollView>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/story_title_label"
-        style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/titleTextView"
-        android:background="@color/colorAccent"
-        android:layout_weight="0.1"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Language"
-        style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/language_label"
-        android:background="@color/colorAccent"
-        android:layout_weight="0.1"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Genre"
-        style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/genre_label"
-        android:background="@color/colorAccent"
-        android:layout_weight="0.1"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Runtime"
-        style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/runtime_label"
-        android:background="@color/colorAccent"
-        android:layout_weight="0.1"/>
-
-    <TextView
+        android:id="@+id/rating_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Rating"
         style="?android:listSeparatorTextViewStyle"
-        android:id="@+id/rating_label"
         android:background="@color/colorAccent"
-        android:layout_weight="0.1"/>
-
+        android:layout_weight="0.1"
+        android:layout_above="@+id/SCROLLER_ID"
+        android:layout_alignParentStart="true"/>
 
     <TextView
+        android:id="@+id/runtime_label"
         android:layout_width="match_parent"
-        android:text="@string/story_details_label"
+        android:layout_height="wrap_content"
+        android:text="Runtime"
         style="?android:listSeparatorTextViewStyle"
-        android:background="@color/colorPrimary"
-        android:layout_weight="0.40"
-        android:layout_gravity="fill_vertical"
-        android:id="@+id/descTextView"/>
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"
+        android:layout_above="@+id/rating_label"
+        android:layout_alignParentStart="true"/>
 
+    <TextView
+        android:id="@+id/genre_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Genre"
+        style="?android:listSeparatorTextViewStyle"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"
+        android:layout_above="@+id/runtime_label"
+        android:layout_alignParentStart="true"/>
 
+    <TextView
+        android:id="@+id/language_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Language"
+        style="?android:listSeparatorTextViewStyle"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"
+        android:layout_above="@+id/genre_label"
+        android:layout_alignParentStart="true"/>
 
-
-
-</LinearLayout>
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/story_title_label"
+        style="?android:listSeparatorTextViewStyle"
+        android:background="@color/colorAccent"
+        android:layout_weight="0.1"
+        android:layout_above="@+id/language_label"
+        android:layout_alignParentStart="true"/>
+</RelativeLayout>

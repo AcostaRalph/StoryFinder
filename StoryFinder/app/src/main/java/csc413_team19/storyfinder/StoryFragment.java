@@ -9,7 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -22,7 +26,12 @@ public class StoryFragment extends Fragment {
     private Story mStory;
     private TextView mTitle;
     private TextView mDescription;
-    private ImageView mPicture;
+    private TextView mLanguage;
+    private TextView mGenre;
+    private TextView mRuntime;
+    private TextView mRating;
+    private NetworkImageView mStoryImage;
+    private ScrollView mScrollView;
     static String sSearchToken;
     JsonController mController;
 
@@ -63,15 +72,37 @@ public class StoryFragment extends Fragment {
 
         mTitle = (TextView) v.findViewById(R.id.titleTextView);
         mDescription = (TextView) v.findViewById(R.id.descTextView);
-        mPicture = (ImageView) v.findViewById(R.id.storyImageView);
-
-
-
-//        StoryMaker storyMaker = StoryMaker.get(getContext());
+        mStoryImage = (NetworkImageView) v.findViewById(R.id.storyImageView);
+        mLanguage = (TextView) v.findViewById(R.id.language_label);
+        mGenre = (TextView) v.findViewById(R.id.genre_label);
+        mRuntime = (TextView) v.findViewById(R.id.runtime_label);
+        mRating = (TextView) v.findViewById(R.id.rating_label);
+        mScrollView = (ScrollView) v.findViewById(R.id.SCROLLER_ID);
+        StoryMaker storyMaker = StoryMaker.get(getContext());
 //        ArrayList<Story> stories = storyMaker.getStories();
 
-        mTitle.setText(mStory.getName());
-        mDescription.setText(mStory.getID());
+        ImageLoader imageLoader =
+                VolleySingleton.getInstance(App.getContext()).getImageLoader();
+
+        mTitle.setText("Title: " + mStory.getName());
+
+        mScrollView.fullScroll(View.FOCUS_DOWN);
+        mDescription.setText("Summary: " + mStory.getDescription());
+        mStoryImage.setImageUrl(mStory.getPictureUrl(), imageLoader);
+        mLanguage.setText("Language: " + mStory.getLanguage());
+        mGenre.setText("Genre:" + mStory.getGenre() + " |");
+
+        if(mStory.getRuntime() == 0)
+            mRuntime.setText("No Runtime available");
+        else
+            mRuntime.setText("Runtime: " + Integer.toString(mStory.getRuntime()) + " min");
+
+        if(mStory.getRating() == 0)
+            mRating.setText("No Rating Available");
+        else
+            mRating.setText("Average Rating: " + mStory.getRating());
+
+
 //        mTitle.setText(stories.get(0).getName());
 //        mDescription.setText(stories.get(0).getID());
 //        mPicture.setImageDrawable(mStory.getImage());

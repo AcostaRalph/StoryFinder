@@ -32,33 +32,13 @@ public class StoryMaker extends AppCompatActivity{
     private StoryMaker(Context context) {
 
         mStories = new ArrayList<>();
-//        for (int i = 1; i < 101; i++) {
-            Story story = new Story();
-        story.setName("");
-//            switch(i%10){
-//                case 1: story.setName(i + "st Tale");
-//                    break;
-//                case 2: story.setName(i + "nd Tale");
-//                    break;
-//                case 3: story.setName(i + "rd Tale");
-//                    break;
-//                default: story.setName(i + "th Tale");
-//                    break;
-//
-//            }
-//            if(i == 11 || i == 12 || i == 13)
-//                story.setName(i + "th Tale");
-//
-            story.setDescription("");
-//            if(i%3 == 0) {
-//                story.setImage(context.getDrawable(R.drawable.hyrule));
-//            }else if(i%3 == 1){
-//                story.setImage(context.getDrawable(R.drawable.majora));
-//            }else{
-//                story.setImage(context.getDrawable(R.drawable.triforce));
-//            }
-            mStories.add(story);
-//        }
+        Story story = new Story();
+
+//        story.setName("");
+//        story.setDescription("");
+
+//        mStories.add(story);
+
     }
 
     public static Story parseJson(JSONObject jsonObject) throws JSONException {

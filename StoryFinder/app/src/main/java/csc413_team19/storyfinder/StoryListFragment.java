@@ -14,14 +14,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class StoryListFragment extends Fragment
@@ -80,21 +80,6 @@ public class StoryListFragment extends Fragment
         mStorySearchView = (SearchView) MenuItemCompat.getActionView(search);
         mStorySearchView.setOnQueryTextListener(this);
         mStorySearchView.setIconifiedByDefault(true);
-//        mStorySearchView.setSubmitButtonEnabled(true);
-//        mStorySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-//            @Override
-//            public boolean onQueryTextSubmit(String query){
-//                //mAdapter.getFilter().filter(query);
-//                return false;
-//            }
-//
-//
-//            @Override
-//            public boolean onQueryTextChange(String query){
-//                //mAdapter.getFilter().filter(query);
-//                return false;
-//            }
-//        });
 
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -122,9 +107,9 @@ public class StoryListFragment extends Fragment
             implements View.OnClickListener {
 
         private TextView mTitleTextView;
-        private TextView mDescriptionTextView;
-        private ImageView mPhotoImageView;
-
+        private TextView mRatingText;
+        private NetworkImageView mPhotoImageView;
+        private RatingBar mRatingBar;
         private Story mStory;
 
         public StoryHolder(View itemView) {
@@ -132,24 +117,33 @@ public class StoryListFragment extends Fragment
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.card_story_title);
-            mDescriptionTextView = (TextView) itemView.findViewById(R.id.card_story_description);
-            mPhotoImageView = (ImageView) itemView.findViewById(R.id.card_image);
+            mRatingBar = (RatingBar) itemView.findViewById(R.id.card_ratingBar);
+            mPhotoImageView = (NetworkImageView) itemView.findViewById(R.id.card_image);
+            mRatingText = (TextView) itemView.findViewById(R.id.card_rating);
+            mRatingBar.setNumStars(10);
+            mRatingBar.setIsIndicator(true);
         }
 
         public void bindStory(Story story) {
             mStory = story;
+            ImageLoader imageLoader =
+                    VolleySingleton.getInstance(App.getContext()).getImageLoader();
             mTitleTextView.setText(mStory.getName());
-            mDescriptionTextView.setText(mStory.getDescription());
-//            mPhotoImageView.setImageDrawable(mStory.getImage());
+
+            if(mStory.getRating() == 0)
+                mRatingText.setText("No Rating Available");
+            else
+                mRatingText.setText("Average Rating: " + mStory.getRating());
+
+            mRatingBar.setRating(mStory.getRating());
+            mPhotoImageView.setImageUrl(mStory.getPictureUrl(), imageLoader);
+
         }
 
         @Override
         public void onClick(View v) {
-
             Intent intent = StoryActivity.newIntent(getActivity(), mStory.getID());
             startActivity(intent);
-
-
         }
 
         void setTitle(String title){
@@ -157,11 +151,16 @@ public class StoryListFragment extends Fragment
             this.mTitleTextView.setText(name);
         }
 
-        void setDescription(String description){
-            String desc = description;
-            this.mDescriptionTextView.setText(desc);
+        void setPhotoImageURL(String imageURL){
+            ImageLoader imageLoader =
+                    VolleySingleton.getInstance(App.getContext()).getImageLoader();
+            this.mPhotoImageView.setImageUrl(imageURL, imageLoader);
         }
 
+        void setRate(double rating){
+            float rate = (float)rating;
+            this.mRatingBar.setRating(rate);
+        }
         void setID(String id){
             String ID = id;
 
@@ -173,13 +172,10 @@ public class StoryListFragment extends Fragment
         Context mContext;
         private ArrayList<Story> mStories;
         private View.OnClickListener mListener;
-        //private ArrayList<Story> mFilterList;
-        //SearchFilter filter;
 
         public StoryAdapter(Context context, ArrayList<Story> stories) {
             this.mContext = context;
             this.mStories = stories;
-            //this.mFilterList = stories;
         }
 
         @Override
@@ -195,8 +191,8 @@ public class StoryListFragment extends Fragment
             holder.bindStory(card);
 //            StoryHolder storyHolder = (StoryHolder) holder;
 //            storyHolder.setTitle(card.getName());
-//            storyHolder.setDescription(card.getDescription());
-//            storyHolder.setID(card.getID());
+//            storyHolder.setRate(card.getRating());
+//            storyHolder.setPhotoImageURL(card.getPictureUrl());
         }
 
         @Override
@@ -214,16 +210,6 @@ public class StoryListFragment extends Fragment
             this.mListener = listener;
         }
 
-
-
-        //Filtering of list starts here
-//        @Override
-//        public Filter getFilter() {
-//            if(filter == null){
-//                filter = new SearchFilter(mFilterList, this);
-//            }
-//            return filter;
-//        }
     }
 
     @Override
@@ -232,11 +218,8 @@ public class StoryListFragment extends Fragment
             mController.cancelAllRequests();
             mController.sendRequest(newText);
         } else if(newText.equals("")) {
-//            mStoryRecyclerView.removeAllViewsInLayout();
             mAdapter.mStories.clear();
             mAdapter.notifyDataSetChanged();
-//            mStoryRecyclerView.setVisibility(View.GONE);
-//            textView.setVisibility(View.VISIBLE);
         }
         return true;
     }
@@ -248,61 +231,10 @@ public class StoryListFragment extends Fragment
             mController.sendRequest(query);
             return false;
         } else {
-//            mStoryRecyclerView.removeAllViewsInLayout();
             mAdapter.mStories.clear();
             mAdapter.notifyDataSetChanged();
-//            Toast.makeText(MainActivity.this, "Must provide more than one character", Toast.LENGTH_SHORT).show();
-//            mStoryRecyclerView.setVisibility(View.GONE);
-//            textView.setVisibility(View.VISIBLE);
-//            textView.setText("Must provide more than one character to search");
             return true;
         }
     }
-
-
-
-//    private class SearchFilter extends Filter {
-//
-//        //Local containers
-//        StoryAdapter adapter;
-//        ArrayList<Story> filterList;
-//
-//        //Sets local containers equal to passed values
-//        private SearchFilter(ArrayList<Story> filterList, StoryAdapter adapter){
-//            this.adapter = adapter;
-//            this.filterList = filterList;
-//        }
-//
-//        @Override
-//        protected FilterResults performFiltering(CharSequence arg){
-//            FilterResults results = new FilterResults();
-//
-//            if(arg != null && arg.length() > 0){
-//                arg = arg.toString().toUpperCase();
-//
-//                ArrayList<Story> filteredStory = new ArrayList<>();
-//
-//                for(int i = 0; i < filterList.size(); i++){
-//                    if(filterList.get(i).getName().toUpperCase().contains(arg)){
-//                        filteredStory.add(filterList.get(i));
-//                    }
-//                }
-//                results.count=filteredStory.size();
-//                results.values=filteredStory;
-//            }else{
-//                results.count=filterList.size();
-//                results.values=filterList;
-//            }
-//
-//            return results;
-//        }
-//
-//        @Override
-//        protected void publishResults(CharSequence arg, Filter.FilterResults results){
-//            adapter.mStories = (ArrayList<Story>) results.values;
-//
-//            adapter.notifyDataSetChanged();
-//        }
-//    }
 
 }

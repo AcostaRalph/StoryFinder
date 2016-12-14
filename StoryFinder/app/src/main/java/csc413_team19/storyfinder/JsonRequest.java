@@ -32,7 +32,7 @@ public class JsonRequest extends Request<ArrayList<Story>> {
     @Override
     protected Response<ArrayList<Story>> parseNetworkResponse(NetworkResponse response) {
         String jsonString = new String(response.data);
-        ArrayList<Story> stories = new ArrayList<Story>();
+        ArrayList<Story> stories = new ArrayList<>();
         JSONObject jsonObject;
         Log.i(this.getClass().getName(), jsonString);
         JSONArray jsonArray = null;
