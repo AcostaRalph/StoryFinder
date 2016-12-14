@@ -87,7 +87,7 @@ public class StoryFragment extends Fragment {
         mTitle.setText("Title: " + mStory.getName());
 
         mScrollView.fullScroll(View.FOCUS_DOWN);
-        mDescription.setText("Summary: " + mStory.getDescription());
+        mDescription.setText("Summary:\n" + mStory.getDescription());
         mStoryImage.setImageUrl(mStory.getPictureUrl(), imageLoader);
         mLanguage.setText("Language: " + mStory.getLanguage());
         mGenre.setText("Genre:" + mStory.getGenre() + " |");

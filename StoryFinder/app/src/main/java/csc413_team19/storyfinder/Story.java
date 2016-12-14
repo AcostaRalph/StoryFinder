@@ -3,6 +3,7 @@ package csc413_team19.storyfinder;
 import android.graphics.Bitmap;
 import android.graphics.Picture;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Html;
 import android.text.Spanned;
 
@@ -21,7 +22,7 @@ public class Story {
     private UUID mUUID;
     private String mID;
     private String mName;
-    private String mDescription;
+    private CharSequence mDescription;
     private String mPictureUrl;
 //    private String formatSummary;
     private float mRating;
@@ -36,10 +37,16 @@ public class Story {
         JSONObject jsonImageObject = jsonShowObject.getJSONObject("image");
         JSONObject jsonRatingObject = jsonShowObject.getJSONObject("rating");
         JSONArray jsonGenreArray = jsonShowObject.getJSONArray("genres");
-//        if(jsonShowObject.has("name"))
+
         this.setName(jsonShowObject.getString("name"));
-//        if(jsonShowObject.has("summary"))
-        this.setDescription(jsonShowObject.getString("summary"));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.setDescription(Html.fromHtml(jsonShowObject.getString("summary"), Html.FROM_HTML_MODE_LEGACY));
+        }
+        else{
+            this.setDescription(Html.fromHtml(jsonShowObject.getString("summary")));
+        }
+
         this.setID(jsonExternalsObject.getString("imdb"));
 
         try{
@@ -79,19 +86,6 @@ public class Story {
             e.printStackTrace();
             this.setGenre("No Genre Available");
         }
-
-//        formatSummary = jsonShowObject.getString("summary");
-//        formatSummary.replaceAll("\\<[^>]*>","");
-//        formatSummary.replace("<p>", "");
-//        formatSummary.replace("</p>", "");
-//        formatSummary.replace("<strong>", "");
-//        formatSummary.replace("</strong>", "");
-//        formatSummary.replace("<em>", "");
-//        formatSummary.replace("</em>", "");
-
-//        this.setDescription(formatSummary);
-
-
     }
 
 
@@ -115,11 +109,11 @@ public class Story {
         mName = name;
     }
 
-    public String getDescription() {
+    public CharSequence getDescription() {
         return mDescription;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Spanned description) {
         mDescription = description;
     }
 
