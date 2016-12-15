@@ -52,7 +52,7 @@ public class JsonController {
         int method = Request.Method.GET;
         String url = "http://api.tvmaze.com/lookup/shows?imdb=" + Uri.encode(query);
 
-        JsonRequest request = new JsonRequest(method, url,
+        JsonSingleRequest request = new JsonSingleRequest(method, url,
                 new Response.Listener<ArrayList<Story>>() {
                     @Override
                     public void onResponse(ArrayList<Story> response) {

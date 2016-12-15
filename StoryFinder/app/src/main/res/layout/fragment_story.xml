@@ -13,7 +13,7 @@
     <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageCard"
@@ -139,7 +139,8 @@
                 android:fillViewport="true"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                >
 
                 <TextView
                     android:layout_width="match_parent"
@@ -147,7 +148,7 @@
                     android:text="@string/story_details_label"
                     style="?android:listSeparatorTextViewStyle"
                     android:background="@color/colorPrimary"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
 
 
                     android:layout_alignParentBottom="true"

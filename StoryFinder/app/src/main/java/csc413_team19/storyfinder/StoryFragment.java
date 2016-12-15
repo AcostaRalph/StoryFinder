@@ -48,9 +48,25 @@ public class StoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String storyId = (String) getArguments().getSerializable(ARG_STORY_ID);
-        mStory = StoryMaker.get(getActivity()).getStory(storyId);
+        final String storyId = (String) getArguments().getSerializable(ARG_STORY_ID);
+//        mStory = StoryMaker.get(getActivity()).getStory(storyId);
         sSearchToken = storyId;
+        mController = new JsonController(new JsonController.OnResponseListener() {
+            @Override
+            public void onSuccess(ArrayList<Story> stories) {
+                mStory = stories.get(0);
+                updateDataSet(mStory);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
+
+//        mController.cancelAllRequests();
+//        mController.sendSingleRequest(storyId);
+//        sSearchToken = storyId;
 //        mController = new JsonController(new JsonController.OnResponseListener() {
 //            @Override
 //            public void onSuccess(ArrayList<Story> stories) {
@@ -80,27 +96,7 @@ public class StoryFragment extends Fragment {
         mScrollView = (ScrollView) v.findViewById(R.id.SCROLLER_ID);
         StoryMaker storyMaker = StoryMaker.get(getContext());
 //        ArrayList<Story> stories = storyMaker.getStories();
-
-        ImageLoader imageLoader =
-                VolleySingleton.getInstance(App.getContext()).getImageLoader();
-
-        mTitle.setText("Title: " + mStory.getName());
-
-        mScrollView.fullScroll(View.FOCUS_DOWN);
-        mDescription.setText("Summary:\n" + mStory.getDescription());
-        mStoryImage.setImageUrl(mStory.getPictureUrl(), imageLoader);
-        mLanguage.setText("Language: " + mStory.getLanguage());
-        mGenre.setText("Genre:" + mStory.getGenre() + " |");
-
-        if(mStory.getRuntime() == 0)
-            mRuntime.setText("No Runtime available");
-        else
-            mRuntime.setText("Runtime: " + Integer.toString(mStory.getRuntime()) + " min");
-
-        if(mStory.getRating() == 0)
-            mRating.setText("No Rating Available");
-        else
-            mRating.setText("Average Rating: " + mStory.getRating());
+        mController.sendSingleRequest(sSearchToken);
 
 
 //        mTitle.setText(stories.get(0).getName());
@@ -110,6 +106,31 @@ public class StoryFragment extends Fragment {
         return v;
     }
 
+    public void updateDataSet(Story story){
+        ImageLoader imageLoader =
+                VolleySingleton.getInstance(App.getContext()).getImageLoader();
 
+        mTitle.setText("Title: " + story.getName());
 
+        mScrollView.fullScroll(View.FOCUS_DOWN);
+        mDescription.setText("Summary:\n" + story.getDescription());
+
+        mStoryImage.setImageUrl(story.getPictureUrl(), imageLoader);
+        mLanguage.setText("Language: " + story.getLanguage());
+        if(mStory.getGenre() == ""){
+            mGenre.setText("No Genre Available");
+        }else {
+            mGenre.setText("Genre:" + mStory.getGenre() + " |");
+        }
+        if(mStory.getRuntime() == 0)
+            mRuntime.setText("No Runtime available");
+        else
+            mRuntime.setText("Runtime: " + Integer.toString(story.getRuntime()) + " min");
+
+        if(mStory.getRating() == 0)
+            mRating.setText("No Rating Available");
+        else
+            mRating.setText("Average Rating: " + story.getRating());
+
+    }
 }

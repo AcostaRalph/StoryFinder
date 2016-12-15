@@ -24,15 +24,18 @@ public class Story {
     private String mName;
     private CharSequence mDescription;
     private String mPictureUrl;
-//    private String formatSummary;
     private float mRating;
     private String mLanguage;
     private String mGenre = "";
     private int mRuntime;
-//    private Drawable mImage;
 
     public Story(JSONObject jsonObject) throws JSONException{
-        JSONObject jsonShowObject = jsonObject.getJSONObject("show");
+        JSONObject jsonShowObject;
+        if(jsonObject.has("show")) {
+            jsonShowObject = jsonObject.getJSONObject("show");
+        }else{
+            jsonShowObject = jsonObject;
+        }
         JSONObject jsonExternalsObject = jsonShowObject.getJSONObject("externals");
         JSONObject jsonImageObject = jsonShowObject.getJSONObject("image");
         JSONObject jsonRatingObject = jsonShowObject.getJSONObject("rating");
@@ -78,13 +81,14 @@ public class Story {
             this.setLanguage("No Language Data Available");
         }
         try {
-            for (int i = 0; i < jsonGenreArray.length(); i++) {
-                this.setGenre(jsonGenreArray.getString(i));
+            if(jsonGenreArray.length() != 0) {
+                for (int i = 0; i < jsonGenreArray.length(); i++) {
+                    this.setGenre(jsonGenreArray.getString(i));
+                }
             }
         }
         catch(JSONException e){
             e.printStackTrace();
-            this.setGenre("No Genre Available");
         }
     }
 
