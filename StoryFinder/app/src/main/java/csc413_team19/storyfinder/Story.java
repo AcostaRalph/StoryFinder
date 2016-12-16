@@ -56,7 +56,6 @@ public class Story {
             this.setPictureUrl(jsonImageObject.getString("original"));
         }catch(JSONException e){
             e.printStackTrace();
-            this.setPictureUrl("https://pvsmt99345.i.lithium.com/t5/image/serverpage/image-id/10546i3DAC5A5993C8BC8C?v=v2");
         }
 
         try {

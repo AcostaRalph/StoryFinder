@@ -33,7 +33,7 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/storyImageView"
                 android:layout_width="match_parent"
-                android:src="@drawable/card"
+                android:src="@drawable/mastersword"
                 android:background="@color/colorPrimary"
                 android:layout_alignParentTop="true"
                 android:layout_height="match_parent"/>
