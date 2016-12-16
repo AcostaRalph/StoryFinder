@@ -65,7 +65,7 @@ public class StoryListFragment extends Fragment
             }
         });
 
-
+        mController.sendFirstRequest();
 
         updateUI();
 
@@ -220,6 +220,7 @@ public class StoryListFragment extends Fragment
             mController.sendRequest(newText);
         } else if(newText.equals("")) {
             mAdapter.mStories.clear();
+            mController.sendFirstRequest();
             mAdapter.notifyDataSetChanged();
         }
         return true;
@@ -233,6 +234,7 @@ public class StoryListFragment extends Fragment
             return false;
         } else {
             mAdapter.mStories.clear();
+            mController.sendFirstRequest();
             mAdapter.notifyDataSetChanged();
             return true;
         }

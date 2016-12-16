@@ -49,7 +49,6 @@ public class StoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final String storyId = (String) getArguments().getSerializable(ARG_STORY_ID);
-//        mStory = StoryMaker.get(getActivity()).getStory(storyId);
         sSearchToken = storyId;
         mController = new JsonController(new JsonController.OnResponseListener() {
             @Override
@@ -63,21 +62,6 @@ public class StoryFragment extends Fragment {
 
             }
         });
-
-//        mController.cancelAllRequests();
-//        mController.sendSingleRequest(storyId);
-//        sSearchToken = storyId;
-//        mController = new JsonController(new JsonController.OnResponseListener() {
-//            @Override
-//            public void onSuccess(ArrayList<Story> stories) {
-//                mStory = stories.get(0);
-//            }
-//            @Override
-//            public void onFailure(String errorMessage) {
-//
-//            }
-//        });
-//        mController.sendSingleRequest(sSearchToken);
     }
 
 

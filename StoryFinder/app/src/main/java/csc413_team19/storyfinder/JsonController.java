@@ -21,6 +21,32 @@ public class JsonController {
         mResponseListener = responseListener;
     }
 
+    public void sendFirstRequest(){
+
+        int method = Request.Method.GET;
+
+        String url = "http://api.tvmaze.com/shows";
+
+        JsonRequest request = new JsonRequest(method, url,
+                new Response.Listener<ArrayList<Story>>() {
+                    @Override
+                    public void onResponse(ArrayList<Story> response) {
+                        mResponseListener.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mResponseListener.onFailure(error.getMessage());
+                    }
+                }
+        );
+
+        request.setTag(TAG);
+
+        VolleySingleton.getInstance(App.getContext()).addToRequestQueue(request);
+    }
+
     public void sendRequest(String query){
 
         int method = Request.Method.GET;

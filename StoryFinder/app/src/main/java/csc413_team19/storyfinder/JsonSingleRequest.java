@@ -36,7 +36,6 @@ public class JsonSingleRequest extends Request<ArrayList<Story>> {
         Log.i(this.getClass().getName(), jsonString);
 
         try {
-//                jsonObject = new JSONObject(jsonString);
             jsonObject = new JSONObject(jsonString);
             stories.add(StoryMaker.parseJson(jsonObject));
         } catch (JSONException excpetion) {
