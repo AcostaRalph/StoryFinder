@@ -17,7 +17,7 @@
     </style>
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/cardview_shadow_end_color</item>
-        <item name="colorControlActivated">@color/gray</item>
+        <item name="colorControlActivated">@color/gold_yellow</item>
     </style>
 
 </resources>

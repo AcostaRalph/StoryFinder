@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -44,8 +45,8 @@ public class StoryListFragment extends Fragment
 
         mStoryRecyclerView = (RecyclerView) view
                 .findViewById(R.id.story_recycler_view);
-        mStoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+//        mStoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mStoryRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 //        mStoryRecyclerView.setAdapter(mAdapter);
 //        StoryMaker storyMaker = StoryMaker.get(getActivity());
 //        ArrayList<Story> stories = storyMaker.getStories();
@@ -120,7 +121,7 @@ public class StoryListFragment extends Fragment
             mRatingBar = (RatingBar) itemView.findViewById(R.id.card_ratingBar);
             mPhotoImageView = (NetworkImageView) itemView.findViewById(R.id.card_image);
             mRatingText = (TextView) itemView.findViewById(R.id.card_rating);
-            mRatingBar.setNumStars(10);
+//            mRatingBar.setNumStars(10);
             mRatingBar.setIsIndicator(true);
         }
 
