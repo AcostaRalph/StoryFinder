@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 public class StoryActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class StoryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story);
+
 
         String storyId = (String) getIntent().getSerializableExtra(EXTRA_STORY_ID);
 //        Intent intent = getIntent();
