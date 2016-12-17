@@ -98,17 +98,17 @@ public class StoryFragment extends Fragment {
         ImageLoader imageLoader =
                 VolleySingleton.getInstance(App.getContext()).getImageLoader();
 
-        mTitle.setText("Title: " + story.getName());
+        mTitle.setText(story.getName());
 
 //        mScrollView.fullScroll(View.FOCUS_DOWN);
-        mDescription.setText("Summary:\n" + story.getDescription());
+        mDescription.setText(story.getDescription());
 
         mStoryImage.setImageUrl(story.getPictureUrl(), imageLoader);
         mLanguage.setText("Language: " + story.getLanguage());
         if(mStory.getGenre() == ""){
             mGenre.setText("No Genre Available");
         }else {
-            mGenre.setText("Genre:" + mStory.getGenre() + " |");
+            mGenre.setText(mStory.getGenre() + " |");
         }
         if(mStory.getRuntime() == 0)
             mRuntime.setText("No Runtime available");
