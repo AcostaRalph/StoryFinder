@@ -1,161 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="4dp"
-    android:background="@color/colorPrimary"
-    android:weightSum="1">
+    android:background="@android:color/background_light"
+    android:id="@+id/storylook"
+    >
 
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageCard"
-        android:padding="16dp"
-        android:orientation="horizontal"
-        android:layout_alignParentStart="true"
-        card_view:cardBackgroundColor="@color/cardview_shadow_start_color"
-        card_view:cardElevation="4dp"
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main.appbar"
+        android:layout_width="match_parent"
+        android:layout_height="544dp"
+        android:theme="@style/AppTheme.ActionBar.Transparent"
         >
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:padding="16dp"
-            android:layout_height="210dp"
-            android:layout_alignParentTop="true"
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
             >
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/storyImageView"
                 android:layout_width="match_parent"
-                android:src="@drawable/card"
-                android:background="@color/colorPrimary"
-                android:layout_alignParentTop="true"
-                android:layout_height="match_parent"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+                android:layout_height="match_parent"
+                android:src="@drawable/mastersword"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                />
 
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/detailsCard"
-        android:padding="16dp"
-        android:orientation="horizontal"
-        card_view:cardBackgroundColor="@color/cardview_shadow_start_color"
-        card_view:cardElevation="4dp"
-        android:layout_below="@+id/imageCard"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="#c000"
         >
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            >
+            android:layout_height="wrap_content">
+
+
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/story_title_label"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/colorAccent"
-                android:layout_weight="0.1"
-                android:layout_alignParentStart="true"/>
+                android:textSize="32sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:lineSpacingExtra="8dp"
+                android:textColor="#ffff"
+                />
             <TextView
-                android:id="@+id/language_label"
+                android:id="@+id/descTextView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Language"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/titleTextView"
+                android:text="@string/story_details_label"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/colorAccent"
-                android:layout_weight="0.1"
-                android:layout_alignParentStart="true"/>
-
+                android:textSize="12dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:textColor="#ffff"
+                android:lineSpacingExtra="8dp"
+                />
             <TextView
                 android:id="@+id/genre_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/descTextView"
                 android:text="Genre"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/colorAccent"
-                android:layout_weight="0.1"
-                android:layout_below="@+id/language_label"
-                android:layout_alignParentStart="true"/>
+                android:textSize="16sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:textColor="#ffff"
+                android:lineSpacingExtra="8dp"
+                />
+            <TextView
+                android:id="@+id/language_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/genre_label"
+                android:text="Language"
+                style="?android:listSeparatorTextViewStyle"
+                android:textSize="16sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#ffff"
+                android:lineSpacingExtra="8dp"
+                />
 
             <TextView
                 android:id="@+id/runtime_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/language_label"
                 android:text="Runtime"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/colorAccent"
-                android:layout_weight="0.1"
-                android:layout_below="@+id/genre_label"
-                android:layout_alignParentStart="true"/>
+                android:textSize="16sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#ffff"
+                android:lineSpacingExtra="8dp"
+                />
 
             <TextView
                 android:id="@+id/rating_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/runtime_label"
                 android:text="Rating"
                 style="?android:listSeparatorTextViewStyle"
-                android:background="@color/colorAccent"
-                android:layout_weight="0.1"
-                android:layout_below="@+id/runtime_label"
-                android:layout_alignParentStart="true"/>
+                android:textSize="16sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#ffff"
+                android:lineSpacingExtra="8dp"
+                />
+
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/summaryCard"
-        android:padding="16dp"
-        android:orientation="horizontal"
-        card_view:cardBackgroundColor="@color/cardview_shadow_start_color"
-        card_view:cardElevation="4dp"
+    </android.support.v4.widget.NestedScrollView>
 
-        android:layout_alignParentBottom="true"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:padding="16dp"
-            android:layout_height="wrap_content">
-
-            <ScrollView
-                android:id="@+id/SCROLLER_ID"
-                android:layout_width="fill_parent"
-                android:scrollbars="vertical"
-                android:fillViewport="true"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_height="match_parent"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:id="@+id/descTextView"
-                    android:text="@string/story_details_label"
-                    style="?android:listSeparatorTextViewStyle"
-                    android:background="@color/colorPrimary"
-                    android:layout_height="match_parent"
-
-
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentStart="true"/>
-            </ScrollView>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
-
+</android.support.design.widget.CoordinatorLayout>

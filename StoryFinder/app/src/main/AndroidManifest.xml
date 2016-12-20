@@ -30,7 +30,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StoryActivity">
+        <activity
+            android:name=".StoryActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <activity android:name=".SingleFragmentActivity">
