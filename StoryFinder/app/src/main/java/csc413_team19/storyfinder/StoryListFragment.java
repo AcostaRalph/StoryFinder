@@ -1,5 +1,7 @@
 package csc413_team19.storyfinder;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,9 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,17 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.*;
-
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-//import android.content.Context.LOCATION_SERVICE;
-
 import java.util.ArrayList;
-
 import android.location.Location;
 import android.widget.Toast;
 
@@ -203,10 +198,6 @@ public class StoryListFragment extends Fragment
         public void onBindViewHolder(StoryHolder holder, int position) {
             Story card = mStories.get(position);
             holder.bindStory(card);
-//            StoryHolder storyHolder = (StoryHolder) holder;
-//            storyHolder.setTitle(card.getName());
-//            storyHolder.setRate(card.getRating());
-//            storyHolder.setPhotoImageURL(card.getPictureUrl());
         }
 
         @Override
@@ -257,45 +248,57 @@ public class StoryListFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case action_location:
+                Log.d("Log","ID 1 PRESSED");
+                ActivityCompat.requestPermissions(this.getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-            //TODO: Add getLocation method
+                LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
 
-            //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            /*
-            if(mGoogleApiClient == null) {
-                mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(LocationServices.API)
-                        .build();
-            }
-            */
+                Location mLastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return false;  //TODO;
-            }
+                String mLatitudeText = null;
+                String mLongitudeText = null;
+                if (mLastLocation != null) {
+                    mLatitudeText = String.valueOf(mLastLocation.getLatitude());
+                    mLongitudeText = String.valueOf(mLastLocation.getLongitude());
+                }
+                    Context context = getActivity().getApplicationContext();
+                    CharSequence text = "Last Location\n" + mLatitudeText + ", " + mLongitudeText;
+                    int duration = Toast.LENGTH_LONG;
 
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    Toast toast = Toast.makeText(context, text, duration);
+                    TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
+                    if( v != null) v.setGravity(Gravity.CENTER);
+                    toast.show();
 
-                Context context = getActivity().getApplicationContext();
-                CharSequence text = "Current Location: " + location;
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-
-            return true;
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
 
 }

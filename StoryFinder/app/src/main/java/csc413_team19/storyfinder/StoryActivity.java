@@ -15,12 +15,6 @@ public class StoryActivity extends AppCompatActivity {
 
     public static String sSearchToken;
 
-//    @Override
-//    protected Fragment createFragment() {
-//        String storyId = (String) getIntent().getSerializableExtra(EXTRA_STORY_ID);
-//        return StoryFragment.newInstance(storyId);
-//    }
-
     public static Intent newIntent(Context packageContext, String id) {
         Intent intent = new Intent(packageContext, StoryActivity.class);
         sSearchToken = id;

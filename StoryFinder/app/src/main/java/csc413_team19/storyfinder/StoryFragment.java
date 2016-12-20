@@ -22,10 +22,6 @@ import java.util.UUID;
 public class StoryFragment extends Fragment {
 
     private static final String ARG_STORY_ID = "story_id";
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
-
 
     private Story mStory;
     private TextView mTitle;
@@ -35,7 +31,6 @@ public class StoryFragment extends Fragment {
     private TextView mRuntime;
     private TextView mRating;
     private NetworkImageView mStoryImage;
-    private ScrollView mScrollView;
     static String sSearchToken;
     JsonController mController;
 
@@ -81,15 +76,8 @@ public class StoryFragment extends Fragment {
         mGenre = (TextView) v.findViewById(R.id.genre_label);
         mRuntime = (TextView) v.findViewById(R.id.runtime_label);
         mRating = (TextView) v.findViewById(R.id.rating_label);
-//        mScrollView = (ScrollView) v.findViewById(R.id.SCROLLER_ID);
         StoryMaker storyMaker = StoryMaker.get(getContext());
-//        ArrayList<Story> stories = storyMaker.getStories();
         mController.sendSingleRequest(sSearchToken);
-
-
-//        mTitle.setText(stories.get(0).getName());
-//        mDescription.setText(stories.get(0).getID());
-//        mPicture.setImageDrawable(mStory.getImage());
 
         return v;
     }
@@ -100,7 +88,6 @@ public class StoryFragment extends Fragment {
 
         mTitle.setText(story.getName());
 
-//        mScrollView.fullScroll(View.FOCUS_DOWN);
         mDescription.setText(story.getDescription());
 
         mStoryImage.setImageUrl(story.getPictureUrl(), imageLoader);
