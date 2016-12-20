@@ -47,8 +47,8 @@ public class JsonRequest extends Request<ArrayList<Story>> {
 //                jsonObject = new JSONObject(jsonString);
                 jsonObject = jsonArray.getJSONObject(i);
                 stories.add(StoryMaker.parseJson(jsonObject));
-            } catch (JSONException excpetion) {
-                excpetion.printStackTrace();
+            } catch (JSONException exception) {
+                exception.printStackTrace();
                 return Response.error(new VolleyError("Request Failed"));
             }
 

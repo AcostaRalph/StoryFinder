@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="csc413_team19.storyfinder">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-sdk android:minSdkVersion="18"/>
 
     <application
         android:name=".App"
@@ -32,6 +35,8 @@
 
         <activity android:name=".SingleFragmentActivity">
         </activity>
+
+
     </application>
 
 </manifest>

@@ -2,7 +2,10 @@ package csc413_team19.storyfinder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,12 +20,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.*;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+//import android.content.Context.LOCATION_SERVICE;
 
 import java.util.ArrayList;
+
+import android.location.Location;
+import android.widget.Toast;
+
+import static android.content.Context.LOCATION_SERVICE;
+import static csc413_team19.storyfinder.R.id.action_location;
 
 
 public class StoryListFragment extends Fragment
@@ -88,11 +101,10 @@ public class StoryListFragment extends Fragment
     private void updateUI() {
         StoryMaker storyMaker = StoryMaker.get(getActivity());
         ArrayList<Story> stories = storyMaker.getStories();
-        if(mAdapter == null) {
+        if (mAdapter == null) {
             mAdapter = new StoryAdapter(getContext(), stories);
             mStoryRecyclerView.setAdapter(mAdapter);
-        }
-        else{
+        } else {
             mAdapter.notifyDataSetChanged();
         }
 
@@ -131,7 +143,7 @@ public class StoryListFragment extends Fragment
                     VolleySingleton.getInstance(App.getContext()).getImageLoader();
             mTitleTextView.setText(mStory.getName());
 
-            if(mStory.getRating() == 0)
+            if (mStory.getRating() == 0)
                 mRatingText.setText("No Rating Available");
             else
                 mRatingText.setText("Average Rating: " + mStory.getRating());
@@ -147,22 +159,23 @@ public class StoryListFragment extends Fragment
             startActivity(intent);
         }
 
-        void setTitle(String title){
+        void setTitle(String title) {
             String name = title;
             this.mTitleTextView.setText(name);
         }
 
-        void setPhotoImageURL(String imageURL){
+        void setPhotoImageURL(String imageURL) {
             ImageLoader imageLoader =
                     VolleySingleton.getInstance(App.getContext()).getImageLoader();
             this.mPhotoImageView.setImageUrl(imageURL, imageLoader);
         }
 
-        void setRate(double rating){
-            float rate = (float)rating;
+        void setRate(double rating) {
+            float rate = (float) rating;
             this.mRatingBar.setRating(rate);
         }
-        void setID(String id){
+
+        void setID(String id) {
             String ID = id;
 
         }
@@ -201,13 +214,13 @@ public class StoryListFragment extends Fragment
             return mStories.size();
         }
 
-        public void updateDataset(ArrayList<Story> storyList){
+        public void updateDataset(ArrayList<Story> storyList) {
             this.mStories.clear();
             this.mStories.addAll(storyList);
             notifyDataSetChanged();
         }
 
-        public void setListener(View.OnClickListener listener){
+        public void setListener(View.OnClickListener listener) {
             this.mListener = listener;
         }
 
@@ -215,10 +228,10 @@ public class StoryListFragment extends Fragment
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        if(newText.length() > 0) {
+        if (newText.length() > 0) {
             mController.cancelAllRequests();
             mController.sendRequest(newText);
-        } else if(newText.equals("")) {
+        } else if (newText.equals("")) {
             mAdapter.mStories.clear();
             mController.sendFirstRequest();
             mAdapter.notifyDataSetChanged();
@@ -228,7 +241,7 @@ public class StoryListFragment extends Fragment
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if(query.length() > 0) {
+        if (query.length() > 0) {
             mController.cancelAllRequests();
             mController.sendRequest(query);
             return false;
@@ -237,6 +250,51 @@ public class StoryListFragment extends Fragment
             mController.sendFirstRequest();
             mAdapter.notifyDataSetChanged();
             return true;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case action_location:
+
+            //TODO: Add getLocation method
+
+            //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            /*
+            if(mGoogleApiClient == null) {
+                mGoogleApiClient = new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(LocationServices.API)
+                        .build();
+            }
+            */
+
+            LocationManager locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return false;  //TODO;
+            }
+
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                Context context = getActivity().getApplicationContext();
+                CharSequence text = "Current Location: " + location;
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
+            return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
